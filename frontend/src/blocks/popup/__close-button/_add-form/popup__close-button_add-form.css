@@ -1,0 +1,15 @@
+.popup__close-button_edit-form {
+    width: 26px;
+    height: 26px;
+    top: -39.62px;
+    right: 0;
+}
+
+@media screen and (min-width: 700px) {
+    .popup__close-button {
+        top: -40.7px;
+        right: -40.7px;
+        width: 40.7px;
+        height: 40.7px;
+    }
+}

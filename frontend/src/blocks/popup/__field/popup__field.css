@@ -1,0 +1,10 @@
+.popup__field {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (min-width: 700px) {
+    .popup__field {
+        width: 358px;
+    }
+}

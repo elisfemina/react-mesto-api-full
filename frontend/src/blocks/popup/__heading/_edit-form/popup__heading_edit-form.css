@@ -1,0 +1,6 @@
+@media screen and (max-width: 699px) {
+    .popup__heading_edit-form {
+        line-height: 22px;
+        margin: 25px 22px 75px 22px;
+    }
+}

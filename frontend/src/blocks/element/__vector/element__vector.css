@@ -1,0 +1,13 @@
+.element__vector {
+    background: transparent url(../../../images/like.svg) center center/cover no-repeat;
+    background-size: 100% 100%;
+    border: none;
+    height: 19px;
+    width: 22px;
+    padding: 0;
+}
+
+.element__vector:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
