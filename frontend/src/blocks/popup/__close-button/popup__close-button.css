@@ -1,0 +1,12 @@
+.popup__close-button {
+    background: transparent url(../../../images/cross.svg) center center/cover no-repeat;
+    padding: 0;
+    border: none;
+    position: absolute;
+    transform: rotate(45deg);
+}
+
+.popup__close-button:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}

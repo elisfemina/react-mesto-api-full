@@ -1,0 +1,5 @@
+@media screen and (max-width: 699px) {
+    .popup__container_edit-form {
+        width: 282px;
+    }
+}

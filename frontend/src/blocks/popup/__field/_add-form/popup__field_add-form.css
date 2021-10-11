@@ -1,0 +1,9 @@
+@media screen and (max-width: 699px) {
+    .popup__field_add-form {
+        width: 200px;
+        height: 24px;
+        margin-bottom: 20px;
+        font-size: 12px;
+        line-height: 14.52px;
+    }
+}

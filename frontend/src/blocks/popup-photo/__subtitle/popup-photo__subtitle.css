@@ -1,0 +1,11 @@
+.popup-photo__subtitle {
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1.25;
+  color: #fff;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+}
