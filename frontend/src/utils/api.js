@@ -4,6 +4,14 @@ class Api {
     this._headers = options.headers;
   }
 
+  // проверка промиса, возврат json'а в случае резолва, возврат статуса ошибки в случае реджекта
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+  }
+
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
@@ -80,20 +88,13 @@ class Api {
       }),
     }).then(this._checkResponse);
   }
-
-  _checkResponse(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка ${res.status}`);
-  }
 }
 // https://auth.nomoreparties.co
 const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-24",
+  baseUrl: "api.sprint15.ilia.nomoredomains.monster",
   headers: {
-    authorization: "2ee5786e-81e6-481c-a9ce-93ddbea1e664",
-    "Content-Type": "application/json",
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
   },
 });
 

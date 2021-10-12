@@ -1,8 +1,10 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 
 const { celebrate, Joi, errors } = require('celebrate');
 const validator = require('validator');
+const cors = require('cors');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
@@ -20,8 +22,9 @@ mongoose.connect("mongodb://localhost:27017/mestodb", {
 });
 
 // подключаем логгер запросов
-
 app.use(requestLogger);
+
+app.use(cors());
 
 const validateUrl = (value) => {
   const result = validator.isURL(value);
