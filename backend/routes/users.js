@@ -3,6 +3,7 @@ const { celebrate, Joi } = require('celebrate');
 const validator = require('validator');
 
 const {
+  getMe,
   getUser,
   getUsers,
   updateUser,
@@ -17,8 +18,7 @@ const validateUrl = (value) => {
 
   return value;
 };
-router.get("/me", getUser);
-
+router.get("/me", getMe);
 router.get("/:userId", celebrate({
   params: Joi.object().keys({
     userId: Joi.string().length(24).hex(),

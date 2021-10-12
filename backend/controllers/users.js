@@ -6,7 +6,19 @@ const BadRequest = require('../errors/bad-request');
 const Conflict = require("../errors/conflict");
 const Unauthorized = require("../errors/unauthorized");
 
-const SALT_ROUNDS = 10;
+const SALT_ROUNDS = 10; // количество раундов хеширования
+const MONGO_DUPLICATE_ERROR_CODE = 11000; // код ошибки при дублировании данных
+const { NODE_ENV, JWT_SECRET } = process.env;
+
+// получение залогиненного пользователя
+const getMe = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (!user) throw new NotFoundError('Пользователь с таким ID не найден');
+      res.send(user);
+    })
+    .catch(next);
+};
 
 const getUser = (req, res, next) => {
   const { userId } = req.params;
@@ -54,7 +66,7 @@ const createUser = (req, res, next) => {
     }))
 
     .catch((err) => {
-      if (err.name === 'MongoServerError' && err.code === 11000) {
+      if (err.name === 'MongoServerError' && err.code === MONGO_DUPLICATE_ERROR_CODE) {
         next(new Conflict('Пользователь с указанным email уже существует'));
       } else if (err.name === "ValidationError") {
         next(new BadRequest(
@@ -115,6 +127,7 @@ const updateAvatarUser = (req, res, next) => {
     });
 };
 
+// АВТОРИЗАЦИЯ
 const login = (req, res, next) => {
   const { email, password } = req.body;
 
@@ -131,8 +144,14 @@ const login = (req, res, next) => {
           return user;
         })
         .then((checkedUser) => {
-          const token = jwt.sign({ _id: checkedUser._id }, 'some-secret-key');
-          return res.send({ token });
+          const token = jwt.sign({ _id: checkedUser._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+            { expiresIn: '7d' });
+          return res.cookie('mestoToken', token, {
+            maxAge: 360000,
+            httpOnly: true,
+            sameSite: true,
+          })
+            .send({ token });
         })
         .catch(() => {
           next(new Unauthorized('Неверный логин или пароль'));
@@ -144,6 +163,7 @@ const login = (req, res, next) => {
 };
 
 module.exports = {
+  getMe,
   getUser,
   getUsers,
   createUser,
